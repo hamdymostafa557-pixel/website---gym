@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fuel Up Gym</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #FF6B00;
+  --orange-light: #FF8C35;
+  --orange-dark: #CC5500;
+  --black: #0A0A0A;
+  --dark: #111111;
+  --card: #181818;
+  --border: #2a2a2a;
+  --white: #FFFFFF;
+  --gray: #888888;
+  --text: #E0E0E0;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--black);
+  color: var(--text);
+  overflow-x: hidden;
+}
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(10,10,10,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo svg { width: 38px; height: 38px; }
+.nav-logo span { font-family: 'Bebas Neue', cursive; font-size: 26px; color: var(--orange); letter-spacing: 2px; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { color: var(--gray); text-decoration: none; font-size: 14px; font-weight: 600; transition: color .2s; }
+.nav-links a:hover { color: var(--orange); }
+ 
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 6rem 2rem 4rem;
+  text-align: center;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,107,0,0.12) 0%, transparent 70%),
+              repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,107,0,0.03) 80px, rgba(255,107,0,0.03) 81px),
+              repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,107,0,0.03) 80px, rgba(255,107,0,0.03) 81px);
+}
+.hero-content { position: relative; z-index: 1; max-width: 700px; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,107,0,0.15); color: var(--orange);
+  border: 1px solid rgba(255,107,0,0.3);
+  border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 700;
+  margin-bottom: 1.5rem; letter-spacing: 1px;
+  animation: fadeDown 0.6s ease both;
+}
+ 
+/* LOGO SVG MASCOT */
+.mascot-wrap {
+  margin: 0 auto 1.5rem;
+  width: 120px; height: 120px;
+  animation: fadeDown 0.7s ease 0.1s both;
+}
+.hero h1 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(64px, 12vw, 110px);
+  line-height: 0.9;
+  color: var(--white);
+  letter-spacing: 4px;
+  animation: fadeDown 0.7s ease 0.2s both;
+}
+.hero h1 span { color: var(--orange); }
+.hero p {
+  font-size: 16px; color: var(--gray); margin-top: 1.2rem; line-height: 1.8;
+  animation: fadeDown 0.7s ease 0.3s both;
+}
+.hero-btns {
+  display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;
+  animation: fadeDown 0.7s ease 0.4s both;
+}
+.btn-primary {
+  background: var(--orange); color: #fff; font-family: 'Cairo', sans-serif;
+  font-weight: 700; font-size: 15px; padding: 14px 32px; border: none;
+  border-radius: 8px; cursor: pointer; text-decoration: none;
+  transition: background .2s, transform .15s;
+}
+.btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent; color: var(--white); font-family: 'Cairo', sans-serif;
+  font-weight: 700; font-size: 15px; padding: 14px 32px;
+  border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; text-decoration: none;
+  transition: border-color .2s, transform .15s;
+}
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+ 
+/* STATS */
+.stats {
+  display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+  padding: 2.5rem 2rem;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: var(--dark);
+}
+.stat { text-align: center; }
+.stat-num { font-family: 'Bebas Neue', cursive; font-size: 42px; color: var(--orange); letter-spacing: 2px; }
+.stat-label { font-size: 13px; color: var(--gray); font-weight: 600; }
+ 
+/* OFFERS */
+.section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+.section-tag {
+  font-size: 12px; font-weight: 700; color: var(--orange); letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.section-title {
+  font-family: 'Bebas Neue', cursive; font-size: clamp(36px, 5vw, 56px);
+  color: var(--white); letter-spacing: 2px; margin-bottom: 0.5rem;
+}
+.section-sub { font-size: 15px; color: var(--gray); margin-bottom: 3rem; }
+ 
+.offers-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;
+}
+.offer-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.8rem;
+  position: relative; overflow: hidden;
+  transition: transform .2s, border-color .2s;
+}
+.offer-card:hover { transform: translateY(-4px); border-color: var(--orange); }
+.offer-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--orange);
+}
+.offer-icon { font-size: 28px; margin-bottom: 0.8rem; }
+.offer-title { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+.offer-desc { font-size: 13px; color: var(--gray); line-height: 1.7; margin-bottom: 1rem; }
+.offer-badge {
+  display: inline-block;
+  background: rgba(255,107,0,0.12); color: var(--orange);
+  border: 1px solid rgba(255,107,0,0.25);
+  font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px;
+}
+ 
+/* PLANS */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+}
+.plan-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.6rem 1.2rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+  cursor: pointer;
+}
+.plan-card:hover { transform: translateY(-5px); border-color: var(--orange); box-shadow: 0 12px 32px rgba(255,107,0,0.15); }
+.plan-card.featured {
+  border-color: var(--orange);
+  background: linear-gradient(160deg, rgba(255,107,0,0.08) 0%, var(--card) 60%);
+}
+.plan-card.featured::after {
+  content: 'الأكثر شعبية';
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  background: var(--orange); color: #fff; font-size: 10px; font-weight: 700;
+  padding: 3px 12px; border-radius: 100px; white-space: nowrap;
+}
+.plan-duration { font-size: 13px; font-weight: 700; color: var(--gray); margin-top: 1.8rem; margin-bottom: 0.4rem; }
+.plan-price {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 52px; color: var(--white); letter-spacing: 1px;
+  line-height: 1;
+}
+.plan-price span { font-size: 18px; color: var(--orange); font-family: 'Cairo', sans-serif; font-weight: 700; }
+.plan-per { font-size: 11px; color: var(--gray); margin-top: 2px; margin-bottom: 1.2rem; }
+.plan-features { list-style: none; text-align: right; margin-bottom: 1.4rem; }
+.plan-features li {
+  font-size: 12px; color: var(--text); padding: 4px 0;
+  display: flex; align-items: center; gap: 6px; justify-content: flex-end;
+}
+.plan-features li::before { content: '✓'; color: var(--orange); font-weight: 700; font-size: 12px; }
+.plan-btn {
+  width: 100%; padding: 10px; background: transparent;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  color: var(--white); font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: background .2s, border-color .2s;
+}
+.plan-btn:hover, .plan-card.featured .plan-btn { background: var(--orange); border-color: var(--orange); }
+ 
+/* NUTRITION TOOL */
+.nutrition-section {
+  padding: 5rem 2rem; background: var(--dark);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.nutrition-inner { max-width: 750px; margin: 0 auto; }
+.tool-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 2.5rem; margin-top: 2.5rem;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 13px; font-weight: 700; color: var(--gray); }
+.form-input, .form-select {
+  background: var(--dark); border: 1px solid var(--border);
+  color: var(--white); font-family: 'Cairo', sans-serif; font-size: 14px;
+  padding: 12px 14px; border-radius: 10px;
+  outline: none; transition: border-color .2s;
+  width: 100%;
+}
+.form-input:focus, .form-select:focus { border-color: var(--orange); }
+.form-select option { background: var(--dark); }
+.activity-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.7rem; margin-bottom: 1.5rem; }
+.activity-btn {
+  padding: 10px 6px; background: var(--dark); border: 1.5px solid var(--border);
+  color: var(--gray); font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700;
+  border-radius: 10px; cursor: pointer; transition: all .2s; text-align: center;
+}
+.activity-btn.active, .activity-btn:hover { border-color: var(--orange); color: var(--orange); background: rgba(255,107,0,0.1); }
+.calc-btn {
+  width: 100%; padding: 15px; background: var(--orange); color: #fff;
+  border: none; border-radius: 10px; font-family: 'Cairo', sans-serif;
+  font-size: 16px; font-weight: 700; cursor: pointer; transition: background .2s;
+  margin-top: 0.5rem;
+}
+.calc-btn:hover { background: var(--orange-light); }
+.result-box {
+  display: none; margin-top: 1.5rem;
+  background: linear-gradient(135deg, rgba(255,107,0,0.08), rgba(255,107,0,0.03));
+  border: 1px solid rgba(255,107,0,0.3); border-radius: 14px; padding: 1.5rem;
+}
+.result-title { font-size: 15px; font-weight: 700; color: var(--orange); margin-bottom: 1rem; }
+.macros-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.8rem; margin-bottom: 1rem; }
+.macro-box { background: var(--dark); border-radius: 10px; padding: 1rem; text-align: center; }
+.macro-num { font-family: 'Bebas Neue', cursive; font-size: 32px; color: var(--white); }
+.macro-unit { font-size: 11px; color: var(--orange); font-weight: 700; }
+.macro-label { font-size: 11px; color: var(--gray); margin-top: 2px; }
+.meal-plan { margin-top: 1rem; }
+.meal-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.meal-item:last-child { border-bottom: none; }
+.meal-name { font-size: 13px; font-weight: 700; color: var(--white); }
+.meal-desc { font-size: 11px; color: var(--gray); margin-top: 2px; line-height: 1.5; }
+.meal-cals { font-size: 12px; color: var(--orange); font-weight: 700; white-space: nowrap; }
+ 
+/* FOOTER */
+footer {
+  background: var(--dark); border-top: 1px solid var(--border);
+  padding: 3rem 2rem 2rem; text-align: center;
+}
+.footer-logo { font-family: 'Bebas Neue', cursive; font-size: 36px; color: var(--orange); letter-spacing: 3px; margin-bottom: 0.5rem; }
+.footer-sub { font-size: 13px; color: var(--gray); margin-bottom: 1.5rem; }
+.footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.footer-links a { color: var(--gray); font-size: 13px; text-decoration: none; transition: color .2s; font-weight: 600; }
+.footer-links a:hover { color: var(--orange); }
+.footer-copy { font-size: 12px; color: #555; }
+ 
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 600px) {
+  nav { padding: 1rem; }
+  .nav-links { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .macros-row { grid-template-columns: 1fr 1fr; }
+  .activity-grid { grid-template-columns: 1fr 1fr; }
+  .plans-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+ 
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Mascot mini in nav -->
+      <circle cx="20" cy="20" r="19" fill="rgba(255,107,0,0.15)" stroke="#FF6B00" stroke-width="1"/>
+      <ellipse cx="20" cy="18" rx="6" ry="7" fill="#FF6B00"/>
+      <circle cx="20" cy="10" r="4" fill="#FF6B00"/>
+      <ellipse cx="12" cy="20" rx="4" ry="2.5" fill="#FF6B00" transform="rotate(-15 12 20)"/>
+      <ellipse cx="28" cy="20" rx="4" ry="2.5" fill="#FF6B00" transform="rotate(15 28 20)"/>
+      <rect x="15" y="24" width="4" height="9" rx="2" fill="#FF6B00"/>
+      <rect x="21" y="24" width="4" height="9" rx="2" fill="#FF6B00"/>
+    </svg>
+    <span>FUEL UP</span>
+  </div>
+  <div class="nav-links">
+    <a href="#offers">العروض</a>
+    <a href="#plans">الاشتراكات</a>
+    <a href="#nutrition">النظام الغذائي</a>
+  </div>
+  <a href="#plans" class="btn-primary" style="font-size:13px; padding:10px 22px;">اشترك الآن</a>
+</nav>
+ 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🔥 انطلق بقوة — ابدأ رحلتك</div>
+ 
+    <!-- MASCOT LOGO -->
+    <div class="mascot-wrap">
+      <svg viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body -->
+        <ellipse cx="60" cy="85" rx="22" ry="28" fill="#FF6B00"/>
+        <!-- Chest highlights -->
+        <ellipse cx="54" cy="80" rx="8" ry="10" fill="#FF8C35" opacity="0.5"/>
+        <ellipse cx="66" cy="80" rx="8" ry="10" fill="#FF8C35" opacity="0.5"/>
+        <!-- Head -->
+        <circle cx="60" cy="36" r="20" fill="#FF6B00"/>
+        <!-- Face -->
+        <ellipse cx="54" cy="38" rx="3.5" ry="4" fill="#CC5500"/>
+        <ellipse cx="66" cy="38" rx="3.5" ry="4" fill="#CC5500"/>
+        <ellipse cx="54" cy="37" rx="2" ry="2.5" fill="white"/>
+        <ellipse cx="66" cy="37" rx="2" ry="2.5" fill="white"/>
+        <ellipse cx="54.8" cy="37.5" rx="1.2" ry="1.5" fill="#0A0A0A"/>
+        <ellipse cx="66.8" cy="37.5" rx="1.2" ry="1.5" fill="#0A0A0A"/>
+        <!-- Brow -->
+        <path d="M50 31 Q54 28 58 31" stroke="#CC5500" stroke-width="2" stroke-linecap="round"/>
+        <path d="M62 31 Q66 28 70 31" stroke="#CC5500" stroke-width="2" stroke-linecap="round"/>
+        <!-- Mouth smile -->
+        <path d="M54 46 Q60 51 66 46" stroke="#CC5500" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <!-- Left arm - bicep flex -->
+        <ellipse cx="28" cy="78" rx="10" ry="6" fill="#FF6B00" transform="rotate(-40 28 78)"/>
+        <ellipse cx="20" cy="86" rx="8" ry="5" fill="#FF6B00" transform="rotate(-20 20 86)"/>
+        <!-- Left bicep peak -->
+        <ellipse cx="26" cy="72" rx="9" ry="7" fill="#FF8C35" transform="rotate(-30 26 72)"/>
+        <!-- Right arm - bicep flex -->
+        <ellipse cx="92" cy="78" rx="10" ry="6" fill="#FF6B00" transform="rotate(40 92 78)"/>
+        <ellipse cx="100" cy="86" rx="8" ry="5" fill="#FF6B00" transform="rotate(20 100 86)"/>
+        <!-- Right bicep peak -->
+        <ellipse cx="94" cy="72" rx="9" ry="7" fill="#FF8C35" transform="rotate(30 94 72)"/>
+        <!-- Legs -->
+        <rect x="44" y="110" width="14" height="24" rx="7" fill="#FF6B00"/>
+        <rect x="62" y="110" width="14" height="24" rx="7" fill="#FF6B00"/>
+        <!-- Shoes -->
+        <ellipse cx="51" cy="134" rx="10" ry="5" fill="#CC5500"/>
+        <ellipse cx="69" cy="134" rx="10" ry="5" fill="#CC5500"/>
+        <!-- Abs lines -->
+        <line x1="60" y1="72" x2="60" y2="105" stroke="#CC5500" stroke-width="1.5" opacity="0.6"/>
+        <line x1="50" y1="82" x2="70" y2="82" stroke="#CC5500" stroke-width="1.5" opacity="0.6"/>
+        <line x1="50" y1="92" x2="70" y2="92" stroke="#CC5500" stroke-width="1.5" opacity="0.6"/>
+      </svg>
+    </div>
+ 
+    <h1>FUEL<br/><span>UP</span></h1>
+    <p>جيمك الجديد — حيث تُبنى الأجساد وتُكسر الحدود<br/>اشتراكات بأسعار مناسبة + أنظمة غذائية مخصصة لك</p>
+    <div class="hero-btns">
+      <a href="#plans" class="btn-primary">ابدأ الاشتراك</a>
+      <a href="#nutrition" class="btn-outline">احسب نظامك الغذائي</a>
+    </div>
+  </div>
+</section>
+ 
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">عضو نشط</div></div>
+  <div class="stat"><div class="stat-num">15+</div><div class="stat-label">مدرب محترف</div></div>
+  <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">مفتوح دايمًا</div></div>
+  <div class="stat"><div class="stat-num">5★</div><div class="stat-label">تقييم العملاء</div></div>
+</div>
+ 
+<!-- OFFERS -->
+<section class="section" id="offers">
+  <div class="section-tag">العروض الحالية</div>
+  <h2 class="section-title">عروض حصرية لأعضائنا</h2>
+  <p class="section-sub">استفد من أحدث عروضنا واشتراكاتنا المميزة</p>
+  <div class="offers-grid">
+    <div class="offer-card">
+      <div class="offer-icon">🎯</div>
+      <div class="offer-title">عرض الأسرة</div>
+      <div class="offer-desc">اشترك مع أحد أفراد عائلتك واحصلوا على خصم 20% على الاشتراكات السنوية — معًا أقوى</div>
+      <div class="offer-badge">خصم 20%</div>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">⚡</div>
+      <div class="offer-title">عرض البداية</div>
+      <div class="offer-desc">أول شهر بنص السعر لأي عضو جديد، شامل جلسة تعريفية مع مدرب متخصص</div>
+      <div class="offer-badge">50% أول شهر</div>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">🏆</div>
+      <div class="offer-title">عرض الطالب</div>
+      <div class="offer-desc">للطلاب وأصحاب البطاقة الطلابية — خصم خاص على اشتراك الشهر والشهرين</div>
+      <div class="offer-badge">خصم 15%</div>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">💪</div>
+      <div class="offer-title">PT مجاني</div>
+      <div class="offer-desc">اشترك في الاشتراك السنوي واحصل على 3 جلسات تدريب شخصي مجانية مع أفضل المدربين</div>
+      <div class="offer-badge">3 جلسات PT مجانًا</div>
+    </div>
+  </div>
+</section>
+ 
+<!-- PLANS -->
+<section style="background: var(--dark); padding: 0; border-top: 1px solid var(--border);">
+<div class="section" id="plans">
+  <div class="section-tag">الاشتراكات</div>
+  <h2 class="section-title">اختار الباقة المناسبة ليك</h2>
+  <p class="section-sub">كل الاشتراكات تشمل دخول غير محدود للجيم والأجهزة</p>
+  <div class="plans-grid">
+ 
+    <div class="plan-card">
+      <div class="plan-duration">شهر واحد</div>
+      <div class="plan-price">400<span> ج</span></div>
+      <div class="plan-per">/ شهريًا</div>
+      <ul class="plan-features">
+        <li>دخول غير محدود</li>
+        <li>استخدام الأجهزة</li>
+        <li>خزانة شخصية</li>
+      </ul>
+      <button class="plan-btn">اشترك الآن</button>
+    </div>
+ 
+    <div class="plan-card">
+      <div class="plan-duration">شهرين</div>
+      <div class="plan-price">650<span> ج</span></div>
+      <div class="plan-per">وفر 150 جنيه</div>
+      <ul class="plan-features">
+        <li>دخول غير محدود</li>
+        <li>استخدام الأجهزة</li>
+        <li>خزانة شخصية</li>
+        <li>نظام غذائي</li>
+      </ul>
+      <button class="plan-btn">اشترك الآن</button>
+    </div>
+ 
+    <div class="plan-card featured">
+      <div class="plan-duration">3 شهور</div>
+      <div class="plan-price">800<span> ج</span></div>
+      <div class="plan-per">وفر 400 جنيه</div>
+      <ul class="plan-features">
+        <li>دخول غير محدود</li>
+        <li>استخدام الأجهزة</li>
+        <li>خزانة شخصية</li>
+        <li>نظام غذائي</li>
+        <li>جلسة PT</li>
+      </ul>
+      <button class="plan-btn">اشترك الآن</button>
+    </div>
+ 
+    <div class="plan-card">
+      <div class="plan-duration">6 شهور</div>
+      <div class="plan-price">1200<span> ج</span></div>
+      <div class="plan-per">وفر 1200 جنيه</div>
+      <ul class="plan-features">
+        <li>دخول غير محدود</li>
+        <li>استخدام الأجهزة</li>
+        <li>خزانة شخصية</li>
+        <li>نظام غذائي</li>
+        <li>جلستين PT</li>
+      </ul>
+      <button class="plan-btn">اشترك الآن</button>
+    </div>
+ 
+    <div class="plan-card">
+      <div class="plan-duration">سنة كاملة</div>
+      <div class="plan-price">2000<span> ج</span></div>
+      <div class="plan-per">وفر 2800 جنيه!</div>
+      <ul class="plan-features">
+        <li>دخول غير محدود</li>
+        <li>استخدام الأجهزة</li>
+        <li>خزانة شخصية</li>
+        <li>نظام غذائي</li>
+        <li>3 جلسات PT</li>
+        <li>أولوية الحجز</li>
+      </ul>
+      <button class="plan-btn">اشترك الآن</button>
+    </div>
+ 
+  </div>
+</div>
+</section>
+ 
+<!-- NUTRITION TOOL -->
+<div class="nutrition-section" id="nutrition">
+  <div class="nutrition-inner">
+    <div class="section-tag">النظام الغذائي</div>
+    <h2 class="section-title">نظامك الغذائي الشخصي</h2>
+    <p class="section-sub">أدخل بياناتك وهنحسبلك السعرات والوجبات اليومية المناسبة</p>
+ 
+    <div class="tool-card">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">الطول (سم)</label>
+          <input type="number" class="form-input" id="height" placeholder="175" min="140" max="220">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الوزن (كجم)</label>
+          <input type="number" class="form-input" id="weight" placeholder="75" min="40" max="200">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">العمر</label>
+          <input type="number" class="form-input" id="age" placeholder="25" min="15" max="70">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الجنس</label>
+          <select class="form-select" id="gender">
+            <option value="male">ذكر</option>
+            <option value="female">أنثى</option>
+          </select>
+        </div>
+      </div>
+ 
+      <label class="form-label" style="display:block; margin-bottom: 0.7rem;">مستوى النشاط</label>
+      <div class="activity-grid" id="activityGrid">
+        <button class="activity-btn active" data-val="1.2" onclick="setActivity(this)">🛋️ خامل<br/><span style="font-size:10px;opacity:.7">مش بتتحرك كتير</span></button>
+        <button class="activity-btn" data-val="1.375" onclick="setActivity(this)">🚶 خفيف<br/><span style="font-size:10px;opacity:.7">1-3 أيام أسبوعيًا</span></button>
+        <button class="activity-btn" data-val="1.55" onclick="setActivity(this)">🏃 متوسط<br/><span style="font-size:10px;opacity:.7">3-5 أيام أسبوعيًا</span></button>
+        <button class="activity-btn" data-val="1.725" onclick="setActivity(this)">💪 شديد<br/><span style="font-size:10px;opacity:.7">6-7 أيام أسبوعيًا</span></button>
+        <button class="activity-btn" data-val="1.9" onclick="setActivity(this)">🔥 محترف<br/><span style="font-size:10px;opacity:.7">تدريب مزدوج</span></button>
+        <button class="activity-btn" data-val="1.0" onclick="setActivity(this)">🎯 هدفك؟<br/><span style="font-size:10px;opacity:.7">إنقاص / تضخيم</span></button>
+      </div>
+ 
+      <div class="form-group" style="margin-bottom:1.2rem;">
+        <label class="form-label">الهدف</label>
+        <select class="form-select" id="goal">
+          <option value="cut">إنقاص الوزن (حرق دهون)</option>
+          <option value="maintain">المحافظة على الوزن</option>
+          <option value="bulk">تضخيم العضلات</option>
+        </select>
+      </div>
+ 
+      <button class="calc-btn" onclick="calculate()">احسب نظامي الغذائي 🔥</button>
+ 
+      <div class="result-box" id="resultBox">
+        <div class="result-title" id="resultTitle"></div>
+        <div class="macros-row">
+          <div class="macro-box">
+            <div class="macro-num" id="calVal">—</div>
+            <div class="macro-unit">سعرة</div>
+            <div class="macro-label">يوميًا</div>
+          </div>
+          <div class="macro-box">
+            <div class="macro-num" id="protVal">—</div>
+            <div class="macro-unit">جرام</div>
+            <div class="macro-label">بروتين</div>
+          </div>
+          <div class="macro-box">
+            <div class="macro-num" id="carbVal">—</div>
+            <div class="macro-unit">جرام</div>
+            <div class="macro-label">كربوهيدرات</div>
+          </div>
+        </div>
+        <div class="meal-plan" id="mealPlan"></div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FUEL UP</div>
+  <div class="footer-sub">حيث تُبنى الأبطال — ابدأ رحلتك اليوم</div>
+  <div class="footer-links">
+    <a href="#offers">العروض</a>
+    <a href="#plans">الاشتراكات</a>
+    <a href="#nutrition">النظام الغذائي</a>
+    <a href="#">تواصل معنا</a>
+  </div>
+  <div class="footer-copy">© 2025 Fuel Up Gym — جميع الحقوق محفوظة</div>
+</footer>
+ 
+<script>
+let activityLevel = 1.2;
+ 
+function setActivity(btn) {
+  document.querySelectorAll('.activity-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activityLevel = parseFloat(btn.dataset.val);
+}
+ 
+function calculate() {
+  const h = parseFloat(document.getElementById('height').value);
+  const w = parseFloat(document.getElementById('weight').value);
+  const a = parseFloat(document.getElementById('age').value);
+  const g = document.getElementById('gender').value;
+  const goal = document.getElementById('goal').value;
+ 
+  if (!h || !w || !a || h < 100 || w < 30 || a < 10) {
+    alert('من فضلك أدخل بياناتك صح!');
+    return;
+  }
+ 
+  // Mifflin-St Jeor
+  let bmr = g === 'male'
+    ? (10 * w) + (6.25 * h) - (5 * a) + 5
+    : (10 * w) + (6.25 * h) - (5 * a) - 161;
+ 
+  let tdee = Math.round(bmr * activityLevel);
+  let targetCals = tdee;
+  let proteinMultiplier = 2.0;
+ 
+  if (goal === 'cut') { targetCals = Math.round(tdee * 0.80); proteinMultiplier = 2.2; }
+  if (goal === 'bulk') { targetCals = Math.round(tdee * 1.15); proteinMultiplier = 1.8; }
+ 
+  const protein = Math.round(w * proteinMultiplier);
+  const fat = Math.round(targetCals * 0.25 / 9);
+  const carbs = Math.round((targetCals - protein * 4 - fat * 9) / 4);
+ 
+  const goalLabel = { cut: 'إنقاص الوزن 🔥', maintain: 'المحافظة على الوزن ⚖️', bulk: 'تضخيم العضلات 💪' }[goal];
+ 
+  document.getElementById('resultTitle').textContent = `نظامك الغذائي لـ ${goalLabel}`;
+  document.getElementById('calVal').textContent = targetCals;
+  document.getElementById('protVal').textContent = protein;
+  document.getElementById('carbVal').textContent = carbs;
+ 
+  const meals = getMeals(targetCals, goal, protein);
+  const mealEl = document.getElementById('mealPlan');
+  mealEl.innerHTML = '<div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:0.8rem;">خطة الوجبات اليومية</div>' +
+    meals.map(m => `
+      <div class="meal-item">
+        <div>
+          <div class="meal-name">${m.name}</div>
+          <div class="meal-desc">${m.desc}</div>
+        </div>
+        <div class="meal-cals">${m.cals} سعرة</div>
+      </div>`).join('');
+ 
+  document.getElementById('resultBox').style.display = 'block';
+  document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+ 
+function getMeals(totalCals, goal, protein) {
+  const c1 = Math.round(totalCals * 0.25);
+  const c2 = Math.round(totalCals * 0.15);
+  const c3 = Math.round(totalCals * 0.30);
+  const c4 = Math.round(totalCals * 0.15);
+  const c5 = Math.round(totalCals * 0.15);
+ 
+  const plans = {
+    cut: [
+      { name: '🌅 الإفطار', desc: 'بيض مسلوق (3 حبات) + شوفان بالحليب قليل الدسم + فاكهة صغيرة', cals: c1 },
+      { name: '🍎 وجبة خفيفة صباح', desc: 'يوغرت يوناني + مكسرات (حفنة صغيرة)', cals: c2 },
+      { name: '🍗 الغداء', desc: 'صدر فراخ مشوي (200جم) + خضار مشوية + أرز بني (نص كوب)', cals: c3 },
+      { name: '🥤 ما بعد التمرين', desc: 'بروتين شيك + موزة', cals: c4 },
+      { name: '🌙 العشاء', desc: 'سمك مشوي (150جم) + سلطة خضراء كبيرة + خيار وطماطم', cals: c5 },
+    ],
+    maintain: [
+      { name: '🌅 الإفطار', desc: 'شوفان بالحليب + بيض مسلوق (2) + عسل + فاكهة', cals: c1 },
+      { name: '🍎 وجبة خفيفة', desc: 'موز + زبدة لوز (ملعقة كبيرة)', cals: c2 },
+      { name: '🍗 الغداء', desc: 'صدر فراخ (200جم) + أرز + خضار مطبوخة + سلطة', cals: c3 },
+      { name: '🥤 ما بعد التمرين', desc: 'بروتين شيك + تمر (3 حبات)', cals: c4 },
+      { name: '🌙 العشاء', desc: 'لحمة قليلة الدهن أو تونة + بطاطا حلوة + سلطة', cals: c5 },
+    ],
+    bulk: [
+      { name: '🌅 الإفطار', desc: 'شوفان بالحليب الكامل + بيض (4) + موز + عسل + مكسرات', cals: c1 },
+      { name: '🍎 وجبة خفيفة', desc: 'ساندوتش تونة بالخبز الأسمر + عصير طبيعي', cals: c2 },
+      { name: '🍗 الغداء', desc: 'صدر فراخ (250جم) + أرز بني (كوب) + خضار + خبز أسمر', cals: c3 },
+      { name: '🥤 ما بعد التمرين', desc: 'بروتين شيك + كربوهيدرات (موز + تمر + عصير)', cals: c4 },
+      { name: '🌙 العشاء', desc: 'لحمة مشوية أو سمك (200جم) + معكرونة أو بطاطا + سلطة', cals: c5 },
+    ]
+  };
+  return plans[goal];
+}
+</script>
+</body>
+</html>
